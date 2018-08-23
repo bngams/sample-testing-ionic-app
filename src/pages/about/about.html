@@ -1,11 +1,20 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      About
+      Countries
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
+	<ion-searchbar (ionInput)="filterCountriesEvent($event)"></ion-searchbar>
+	<ion-list>
+	  <ion-item *ngFor="let country of filteredCountries">
+	    <ion-avatar item-start>
+	      <img src="{{country.flag}}">
+	    </ion-avatar>
+	    <h2>{{country.name}}</h2>
+	    <p>{{country.capital}}</p>
+	  </ion-item>
+	</ion-list>
 </ion-content>

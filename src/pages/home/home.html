@@ -4,14 +4,63 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content>
+  <div padding>
+    <ion-segment [(ngModel)]="editorFilter">
+      <ion-segment-button value="DC">
+        DC Comics
+      </ion-segment-button>
+      <ion-segment-button value="Marvel">
+        Marvel
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  
+  <div [ngSwitch]="editorFilter">
+    <ng-container *ngFor="let hero of heroes">
+      <ion-card *ngSwitchCase="hero.editor">
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="{{hero.cover}}">
+          </ion-avatar>
+          <h2>{{hero.realname}}</h2>
+          <p>aka {{hero.name}}</p>
+        </ion-item>
+
+        <img src="{{hero.cover}}">
+
+        <ion-card-content>
+          <p>Movies ({{hero.movies.length}})</p>
+          <ul>  
+            <!-- use ng-container if u don't want to use a specific element (li) -->
+            <ng-container *ngFor="let movie of hero.movies">
+              <li> 
+                {{movie.title}}, {{movie.releaseDate | date:'yyyy' }}
+              </li>     
+            </ng-container>
+          </ul>
+        </ion-card-content>
+
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>12 Likes</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-left clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>4 Comments</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              11h ago
+            </ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ng-container>
+  </div>
 </ion-content>
